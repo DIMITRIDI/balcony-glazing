@@ -2,7 +2,8 @@ import checkNumInputs from './checkNumInputs';
 
 const forms = (state) => {
    const form = document.querySelectorAll('form'),
-         inputs = document.querySelectorAll('input');
+         inputs = document.querySelectorAll('input'),
+         windows = document.querySelectorAll('[data-modal]');
 
    checkNumInputs('input[name="user_phone"]');
 
@@ -32,6 +33,10 @@ const forms = (state) => {
       item.addEventListener('submit', (e) => {
          e.preventDefault();
 
+         for (let elem of item.elements) {
+            console.log(elem);
+         }
+
          let statusMessage = document.createElement('div');
          statusMessage.classList.add('status');
          item.appendChild(statusMessage);
@@ -53,6 +58,10 @@ const forms = (state) => {
                clearInputs();
                setTimeout(() => {
                   statusMessage.remove();
+                  windows.forEach(item => {
+                     item.style.display = 'none';
+                  });
+                  document.body.style.overflow = "visible";
                }, 5000);
             });
       });
